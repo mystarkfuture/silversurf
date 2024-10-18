@@ -52,8 +52,6 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 COPY fsroot/etc/yum.repos.d/vscode.repo /etc/yum.repos.d/vscode.repo
 
 COPY build.sh /tmp/build.sh
-COPY build_files/* /tmp/
-
 
 RUN mkdir -p /var/lib/alternatives && \
     /tmp/build.sh && \

@@ -68,8 +68,9 @@ rpm-ostree override remove gnome-extensions-app
 rpm-ostree override remove gnome-tour
 rpm-ostree override remove firefox-langpacks
 rpm-ostree override remove firefox
-rpm-ostree override remove podman-docker
+# rpm-ostree override remove gnome-software-rpm-ostree
 # rpm-ostree override remove ublue-os-update-services
+# rpm-ostree override remove podman-docker
 
 # systemd units
 systemctl enable podman.socket

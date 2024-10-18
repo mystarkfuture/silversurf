@@ -48,7 +48,13 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
-COPY fsroot/*  /
+# Copy fsroot artifacts
+COPY fsroot/etc/yum.repos.d/* /etc/yum.repos.d/
+COPY fsroot/etc/profile.d/* /etc/profile.d/
+COPY fsroot/usr/lib/systemd/system/* /usr/lib/systemd/system/
+COPY fsroot/usr/lib/systemd/system-preset/* /usr/lib/systemd/system-preset/
+COPY fsroot/usr/lib/systemd/tmpfiles.d/* /usr/lib/systemd/tmpfiles.d/
+
 
 COPY build.sh /tmp/build.sh
 

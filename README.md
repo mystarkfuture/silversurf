@@ -82,14 +82,11 @@ This provides users a method of verifying the image.
 
 ## Rebase
 
-> **Warning**  
-> [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable), try at your own discretion.
-
 To rebase an existing atomic Fedora installation to the latest build:
 
 - First rebase to the unsigned image, to get the proper signing keys and policies installed:
   ```
-  rpm-ostree rebase ostree-unverified-registry:ghcr.io/mystarkfuture/heartsbane:latest
+  rpm-ostree rebase ostree-unverified-registry:ghcr.io/mystarkfuture/silversurf:latest
   ```
 - Reboot to complete the rebase:
   ```
@@ -97,7 +94,7 @@ To rebase an existing atomic Fedora installation to the latest build:
   ```
 - Then rebase to the signed image, like so:
   ```
-  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/mystarkfuture/heartsbane:latest
+  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/mystarkfuture/silversurf:latest
   ```
 - Reboot again to complete the installation
   ```
@@ -125,7 +122,7 @@ mkdir ./iso-output
 sudo podman run --rm --privileged --volume ./iso-output:/build-container-installer/build --security-opt label=disable --pull=newer \
 ghcr.io/jasonn3/build-container-installer:latest \
 IMAGE_REPO=ghcr.io/mystarkfuture \
-IMAGE_NAME=heartsbane \
+IMAGE_NAME=silversurf \
 IMAGE_TAG=latest \
 VARIANT=Silverblue
 ```

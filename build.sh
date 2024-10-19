@@ -88,6 +88,9 @@ rpm-ostree override remove firefox
 # rpm-ostree override remove ublue-os-update-services
 # rpm-ostree override remove podman-docker
 
+# make sure these files aren't present
+rm /etc/.linuxbrew
+rm /var/home/linuxbrew/.linuxbrew
 # systemd units
 systemctl enable podman.socket
 systemctl enable brew-setup.service

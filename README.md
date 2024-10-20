@@ -126,3 +126,11 @@ IMAGE_NAME=silversurf \
 IMAGE_TAG=latest \
 VARIANT=Silverblue
 ```
+
+## Post Install
+
+```bash
+sudo systemctl enable brew-setup.service
+sudo systemctl enable brew-upgrade.timer
+sudo systemctl enable brew-update.timer
+```

@@ -12,6 +12,17 @@ touch /.dockerenv
 mkdir -p /var/home
 mkdir -p /var/roothome
 
+# essentials for homebrew
+rpm-ostree install gcc
+rpm-ostree install g++
+rpm-ostree install make
+rpm-ostree install automake
+rpm-ostree install autoconf
+rpm-ostree install glibc-devel
+rpm-ostree install libstdc++-devel
+rpm-ostree install binutils
+rpm-ostree install kernel-devel
+
 # Brew Install Script
 curl -Lo /tmp/brew-install https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
 chmod +x /tmp/brew-install
@@ -67,7 +78,6 @@ rpm-ostree install ulauncher
 
 # Development
 rpm-ostree install code
-rpm-ostree install make
 rpm-ostree install python3-pip
 rpm-ostree install libxcrypt-compat
 rpm-ostree override remove toolbox --install distrobox

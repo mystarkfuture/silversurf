@@ -38,6 +38,11 @@ ARG SOURCE_SUFFIX="-asus-nvidia"
 ## SOURCE_TAG arg must be a version built for the specific image: eg, 39, 40, gts, latest
 ARG SOURCE_TAG="latest"
 
+ARG BASE_IMAGE_NAME="${BASE_IMAGE_NAME:-silverblue}"
+
+# Cache image
+FROM scratch AS ctx
+COPY / /
 
 ### 2. SOURCE IMAGE
 ## this is a standard Containerfile FROM using the build ARGs above to select the right upstream image
@@ -48,18 +53,17 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
-# Copy fsroot artifacts
-COPY fsroot/etc/yum.repos.d/* /etc/yum.repos.d/
-COPY fsroot/etc/profile.d/* /etc/profile.d/
-COPY fsroot/usr/lib/systemd/system/* /usr/lib/systemd/system/
-COPY fsroot/usr/lib/systemd/system-preset/* /usr/lib/systemd/system-preset/
-COPY fsroot/usr/lib/systemd/tmpfiles.d/* /usr/lib/systemd/tmpfiles.d/
+# # Copy fsroot artifacts
+# COPY fsroot/etc/yum.repos.d/* /etc/yum.repos.d/
+# COPY fsroot/etc/profile.d/* /etc/profile.d/
+# COPY fsroot/usr/lib/systemd/system/* /usr/lib/systemd/system/
+# COPY fsroot/usr/lib/systemd/system-preset/* /usr/lib/systemd/system-preset/
+# COPY fsroot/usr/lib/systemd/tmpfiles.d/* /usr/lib/systemd/tmpfiles.d/
+# COPY build.sh /tmp/build.sh
 
-
-COPY build.sh /tmp/build.sh
-
-RUN mkdir -p /var/lib/alternatives && \
-    /tmp/build.sh && \
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    mkdir -p /var/lib/alternatives && \
+    /ctx/build_files/build.sh && \
     ostree container commit
 ## NOTES:
 # - /var/lib/alternatives is required to prevent failure with some RPM installs

@@ -94,15 +94,19 @@ rpm-ostree override remove gnome-extensions-app
 rpm-ostree override remove gnome-tour
 rpm-ostree override remove firefox-langpacks
 rpm-ostree override remove firefox
+
+# use these to disable system update modules
 # rpm-ostree override remove gnome-software-rpm-ostree
 # rpm-ostree override remove ublue-os-update-services
 # rpm-ostree override remove podman-docker
 
 # systemd units
 systemctl enable podman.socket
-systemctl enable brew-setup.service
-systemctl enable brew-upgrade.timer
-systemctl enable brew-update.timer
+
+# start these after first boot
+# systemctl enable brew-setup.service
+# systemctl enable brew-upgrade.timer
+# systemctl enable brew-update.timer
 
 # modifications to /etc/
 # ZRAM conf

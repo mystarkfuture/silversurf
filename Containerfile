@@ -42,9 +42,9 @@ ARG SOURCE_TAG="latest"
 ## Create fsroot cache image
 FROM scratch AS ctx
 COPY / /
-# RUN chmod +x /build.sh && \
-#     chmod +x /build_files/*
-
+RUN chmod +x /build.sh && \
+    chmod +x /build_files/* && \
+    ls -ltra
 
 ### 2. SOURCE IMAGE
 ## this is a standard Containerfile FROM using the build ARGs above to select the right upstream image
@@ -55,9 +55,9 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx,rw \
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     mkdir -p /var/lib/alternatives && \
-    chmod +x /ctx/build.sh && \
+    # chmod +x /ctx/build.sh && \
     /ctx/build.sh && \
     ostree container commit
 ## NOTES:

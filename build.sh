@@ -4,7 +4,7 @@ set -ouex pipefail
 
 # Copy fsroot/ root to /
 rsync -rvK /ctx/fsroot/ /
-chmod +x /ctx/build_files/*
+# chmod +x /ctx/build_files/*
 
 /ctx/buikd_files/copr.sh
 /ctx/buikd_files/packages.sh

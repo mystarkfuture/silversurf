@@ -38,31 +38,20 @@ ARG SOURCE_SUFFIX="-asus-nvidia"
 ## SOURCE_TAG arg must be a version built for the specific image: eg, 39, 40, gts, latest
 ARG SOURCE_TAG="latest"
 
-
 ### 2. SOURCE IMAGE
 ## this is a standard Containerfile FROM using the build ARGs above to select the right upstream image
 FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 
+# copy content to /tmp/
+COPY . /tmp/ctx/
 
 ### 3. MODIFICATIONS
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
-COPY build.sh /tmp/build.sh
-
-# Copy fsroot artifacts
-COPY fsroot/etc/yum.repos.d/* /etc/yum.repos.d/
-COPY fsroot/etc/profile.d/* /etc/profile.d/
-COPY fsroot/usr/lib/systemd/system/* /usr/lib/systemd/system/
-COPY fsroot/usr/lib/systemd/system-preset/* /usr/lib/systemd/system-preset/
-COPY fsroot/usr/lib/systemd/tmpfiles.d/* /usr/lib/systemd/tmpfiles.d/
-COPY fsroot/usr/libexec/* /usr/libexec/
-
 RUN mkdir -p /var/lib/alternatives && \
-    /tmp/build.sh && \
-    systemctl enable brew-setup.service && \
-    systemctl enable brew-upgrade.timer && \
-    systemctl enable brew-update.timer && \
+    /tmp/ctx/build.sh && \
+    rm -rf /tmp/* && \
     ostree container commit
 ## NOTES:
 # - /var/lib/alternatives is required to prevent failure with some RPM installs

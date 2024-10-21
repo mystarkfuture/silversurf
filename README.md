@@ -119,12 +119,22 @@ cosign verify --key cosign.pub ghcr.io/mystarkfuture/heartsbane
 
 ```bash
 mkdir ./iso-output
+
+# for podman
 sudo podman run --rm --privileged --volume ./iso-output:/build-container-installer/build --security-opt label=disable --pull=newer \
 ghcr.io/jasonn3/build-container-installer:latest \
 IMAGE_REPO=ghcr.io/mystarkfuture \
 IMAGE_NAME=silversurf \
 IMAGE_TAG=latest \
 VARIANT=Silverblue
+
+# for docker
+sudo docker run --rm --privileged --volume ./iso-output:/build-container-installer/build --pull=always \
+ghcr.io/jasonn3/build-container-installer:latest \
+IMAGE_REPO=ghcr.io/mystarkfuture \
+IMAGE_NAME=silversurf \
+IMAGE_TAG=latest \
+VARIANT=Silverblue # should match the variant your image is based on
 ```
 
 ## Post Install

@@ -43,8 +43,7 @@ ARG SOURCE_TAG="latest"
 FROM scratch AS ctx
 COPY / /
 RUN chmod +x /build.sh && \
-    chmod +x /build_files/* && \
-    ls -ltra
+    chmod +x /build_files/*
 
 ### 2. SOURCE IMAGE
 ## this is a standard Containerfile FROM using the build ARGs above to select the right upstream image
@@ -58,6 +57,7 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     mkdir -p /var/lib/alternatives && \
     # chmod +x /ctx/build.sh && \
+    ls -ltra /ctx/ && \
     /ctx/build.sh && \
     ostree container commit
 ## NOTES:

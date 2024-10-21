@@ -39,7 +39,7 @@ ARG SOURCE_SUFFIX="-asus-nvidia"
 ARG SOURCE_TAG="latest"
 
 
-## Create fsroot main image
+## Create fsroot cache image
 FROM scratch AS ctx
 COPY . /
 
@@ -53,7 +53,7 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx,rw \
     mkdir -p /var/lib/alternatives && \
     chmod +x /ctx/build.sh && \
     /ctx/build.sh && \

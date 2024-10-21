@@ -42,7 +42,7 @@ ARG BASE_IMAGE_NAME="${BASE_IMAGE_NAME:-silverblue}"
 
 # Cache image
 FROM scratch AS ctx
-COPY / /
+COPY . /
 
 ### 2. SOURCE IMAGE
 ## this is a standard Containerfile FROM using the build ARGs above to select the right upstream image

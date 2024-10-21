@@ -41,7 +41,9 @@ ARG SOURCE_TAG="latest"
 
 ## Create fsroot cache image
 FROM scratch AS ctx
-COPY . /
+COPY / /
+# RUN chmod +x /build.sh && \
+#     chmod +x /build_files/*
 
 
 ### 2. SOURCE IMAGE

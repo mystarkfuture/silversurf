@@ -1,0 +1,11 @@
+[Unit]
+Description=Run firstboot script
+Before=multi-user.target
+ConditionPathExists=!/etc/.firstboot
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/firstboot.sh
+
+[Install]
+WantedBy=multi-user.target
